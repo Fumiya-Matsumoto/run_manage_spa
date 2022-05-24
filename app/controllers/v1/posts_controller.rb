@@ -18,7 +18,6 @@ module V1
             post = @user.posts.build(post_params)
             post.save!
 
-            
             kind_of_practice = post.kind_of_practice
             post_records = post.post_records
 
