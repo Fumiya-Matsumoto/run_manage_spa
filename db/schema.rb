@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_22_113303) do
+ActiveRecord::Schema.define(version: 2022_05_25_053626) do
 
   create_table "best_times", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -61,16 +61,9 @@ ActiveRecord::Schema.define(version: 2022_05_22_113303) do
     t.integer "kind_of_practice", null: false
     t.text "content"
     t.integer "strength"
-    t.integer "num_main"
-    t.integer "num_recovery"
-    t.float "time_main"
-    t.float "time_recovery"
-    t.float "pace_main"
-    t.float "pace_recovery"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "practice_timezone"
-    t.float "distance"
     t.float "warming_up_distance"
     t.float "cooling_down_distance"
     t.index ["user_id"], name: "index_posts_on_user_id"
