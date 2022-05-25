@@ -1,28 +1,52 @@
 module V1
     class PostsController < ApplicationController
         before_action :set_user
+        before_action :set_post, only: [:show, :update, :destroy]
+        
         def index # 特定ユーザーのpost一覧を取得
-            user = User.find(params[:user_id])
-            posts = user.posts
-
+            posts = @user.posts
             render json: {
                 posts: posts
             }, status: :ok
         end
 
         def show
-            post = Post.find(params[:post_id])
+            render json: {
+                post: @post
+            }, status: :ok
         end
 
         def create
             post = @user.posts.build(post_params)
-            post.save!
+            if post.save!
+                render json: {
+                    post: post
+                }, status: :created
+            else
+                render json: {}, status: :internal_server_error
+            end
+        end
+
+        def update
+            @post.update(post_params)
+            render json: {}, status: :no_content
+        end
+
+        def destroy
+            @post.destroy
+            render json: {
+                post: @post
+            }, status: :no_content
         end
 
         private
 
         def set_user
             @user = User.find(params[:user_id])
+        end
+
+        def set_post
+            @post = Post.find(params[:id])
         end
 
         def post_params
