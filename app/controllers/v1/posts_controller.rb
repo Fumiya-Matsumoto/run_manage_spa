@@ -1,10 +1,18 @@
 module V1
     class PostsController < ApplicationController
-        before_action :set_user
+        before_action :set_user, only: [:user_index]
         before_action :set_post, only: [:show, :update, :destroy]
+        before_action :authenticate_v1_user!
         
-        def index # 特定ユーザーのpost一覧を取得
+        def user_index # 特定ユーザーのpost一覧を取得
             posts = @user.posts
+            render json: {
+                posts: posts
+            }, status: :ok
+        end
+
+        def index # すべてのpost一覧を取得
+            posts = Post.all
             render json: {
                 posts: posts
             }, status: :ok
@@ -17,7 +25,7 @@ module V1
         end
 
         def create
-            post = @user.posts.build(post_params)
+            post = @current_v1_user.posts.build(post_params)
             if post.save!
                 render json: {
                     post: post
