@@ -35,16 +35,24 @@ module V1
             end
         end
 
-        def update
-            @post.update(post_params)
-            render json: {}, status: :no_content
+        def update # 現在ログイン中のユーザーの投稿であれば編集可能
+            if current_v1_user.id == @post.user_id
+                @post.update(post_params)
+                render json: {}, status: :no_content
+            else
+                render json: {}, status: :forbidden
+            end
         end
 
-        def destroy
-            @post.destroy
-            render json: {
-                post: @post
-            }, status: :no_content
+        def destroy # 現在ログイン中のユーザーの投稿であれば削除可能
+            if current_v1_user.id == @post.user_id
+                @post.destroy
+                render json: {
+                    post: @post
+                }, status: :no_content
+            else 
+                render json: {}, status: :forbidden
+            end
         end
 
         private
