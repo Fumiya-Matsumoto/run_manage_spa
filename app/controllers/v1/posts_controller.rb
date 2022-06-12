@@ -1,10 +1,18 @@
 module V1
     class PostsController < ApplicationController
-        before_action :set_user
+        before_action :set_user, only: [:user_index]
         before_action :set_post, only: [:show, :update, :destroy]
+        before_action :authenticate_v1_user!
         
-        def index # 特定ユーザーのpost一覧を取得
+        def user_index # 特定ユーザーのpost一覧を取得
             posts = @user.posts
+            render json: {
+                posts: posts
+            }, status: :ok
+        end
+
+        def index # すべてのpost一覧を取得
+            posts = Post.all
             render json: {
                 posts: posts
             }, status: :ok
@@ -17,7 +25,7 @@ module V1
         end
 
         def create
-            post = @user.posts.build(post_params)
+            post = @current_v1_user.posts.build(post_params)
             if post.save!
                 render json: {
                     post: post
@@ -27,16 +35,24 @@ module V1
             end
         end
 
-        def update
-            @post.update(post_params)
-            render json: {}, status: :no_content
+        def update # 現在ログイン中のユーザーの投稿であれば編集可能
+            if current_v1_user.id == @post.user_id
+                @post.update(post_params)
+                render json: {}, status: :no_content
+            else
+                render json: {}, status: :forbidden
+            end
         end
 
-        def destroy
-            @post.destroy
-            render json: {
-                post: @post
-            }, status: :no_content
+        def destroy # 現在ログイン中のユーザーの投稿であれば削除可能
+            if current_v1_user.id == @post.user_id
+                @post.destroy
+                render json: {
+                    post: @post
+                }, status: :no_content
+            else 
+                render json: {}, status: :forbidden
+            end
         end
 
         private
