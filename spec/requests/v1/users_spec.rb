@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe 'PostAPI' do
+describe 'UserAPI' do
     it 'is valid' do
         expect(FactoryBot.build(:user)).to be_valid
     end
