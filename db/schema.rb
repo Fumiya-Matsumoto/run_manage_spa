@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_25_053626) do
+ActiveRecord::Schema.define(version: 2022_06_12_133307) do
 
   create_table "best_times", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -67,6 +67,16 @@ ActiveRecord::Schema.define(version: 2022_05_25_053626) do
     t.float "warming_up_distance"
     t.float "cooling_down_distance"
     t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "relationships", force: :cascade do |t|
+    t.integer "follower_id"
+    t.integer "followed_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["followed_id"], name: "index_relationships_on_followed_id"
+    t.index ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true
+    t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
   create_table "teams", force: :cascade do |t|
