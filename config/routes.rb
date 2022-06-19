@@ -9,8 +9,12 @@ Rails.application.routes.draw do
     # end
     resources :users, only: [:index, :show] do
       get 'posts', to: "posts#user_index"
+      member do
+        get :following, :followers
+      end
       resources :best_times
       resources :objective
     end
+    resources :relationships, only: [:create, :destroy]
   end
 end
