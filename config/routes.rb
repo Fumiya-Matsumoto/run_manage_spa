@@ -12,9 +12,9 @@ Rails.application.routes.draw do
       member do
         get :following, :followers
       end
-      resources :best_times
       resources :objective
     end
+    resources :best_times
     resources :relationships, only: [:create, :destroy]
   end
 end
