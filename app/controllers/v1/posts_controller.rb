@@ -47,9 +47,7 @@ module V1
         def destroy # 現在ログイン中のユーザーの投稿であれば削除可能
             if current_v1_user.id == @post.user_id
                 @post.destroy
-                render json: {
-                    post: @post
-                }, status: :no_content
+                render json: {}, status: :no_content
             else 
                 render json: {}, status: :forbidden
             end

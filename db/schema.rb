@@ -10,24 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_12_133307) do
+ActiveRecord::Schema.define(version: 2022_06_19_053800) do
 
   create_table "best_times", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.float "time_800"
-    t.float "time_1000"
-    t.float "time_1500"
-    t.float "time_2000"
-    t.float "time_3000"
-    t.float "time_5000"
-    t.float "time_10000"
-    t.float "time_3000sc"
-    t.float "time_5k"
-    t.float "time_10k"
-    t.float "time_half"
-    t.float "time_marathon"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.float "best_time"
+    t.float "distance"
+    t.datetime "date"
+    t.string "event"
+    t.integer "official"
+    t.index ["user_id", "distance", "official"], name: "index_best_times_on_user_id_and_distance_and_official", unique: true
     t.index ["user_id"], name: "index_best_times_on_user_id"
   end
 
