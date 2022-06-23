@@ -1,24 +1,15 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## ステータスコードとレスポンスボディの方針
+### 200番台
+* POST
+  * ステータスコード：201
+  * シンボル：created
+  * レスポンスボディ：新規データ
+* PUTおよびPATCH
+  * ステータスコード:200
+  * シンボル：ok
+  * レスポンスボディ:更新後のデータ
+* DELETE
+  * ステータスコード：204
+  * シンボル:no_content   
