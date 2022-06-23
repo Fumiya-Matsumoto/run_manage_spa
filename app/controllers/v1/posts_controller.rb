@@ -2,7 +2,7 @@ module V1
     class PostsController < ApplicationController
         before_action :set_user, only: [:user_index]
         before_action :set_post, only: [:show, :update, :destroy]
-        before_action :authenticate_v1_user!
+        before_action :authenticate_v1_user!, except: :index
         
         def user_index # 特定ユーザーのpost一覧を取得
             posts = @user.posts
