@@ -8,11 +8,13 @@ import { PracticePosts } from "../components/pages/PracticePosts";
 import { Feeds } from "../components/pages/Feeds";
 import { MyPage } from "../components/pages/MyPage";
 import { Page404 } from "../components/pages/Page404";
+import { Registration } from "../components/pages/Registration";
 
 export const Router: FC = memo(() => {
   return (
     <Routes>
       <Route index element={<Login />} />
+      <Route path="signup" element={<Registration />} />
       <Route path="home" element={<Base />}>
         <Route index element={<Calender />} />
         <Route path="practice_posts" element={<PracticePosts />} />

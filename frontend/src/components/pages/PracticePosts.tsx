@@ -10,6 +10,10 @@ import {
 } from '../../reducers/practice_posts';
 
 export const PracticePosts: FC = memo(() => {
-    return <p>練習一覧</p>;
+    return (
+        <>
+            <p>練習一覧</p>
+        </>
+    )
 });
 
