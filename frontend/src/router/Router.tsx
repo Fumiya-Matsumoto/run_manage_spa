@@ -2,6 +2,7 @@ import { memo, FC } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import { Login } from "../components/pages/Login";
+import { SignIn } from "../components/pages/SignIn";
 import { Base } from "../components/pages/Base";
 import { Calender } from "../components/pages/Calender";
 import { PracticePosts } from "../components/pages/PracticePosts";
@@ -13,7 +14,7 @@ import { Registration } from "../components/pages/Registration";
 export const Router: FC = memo(() => {
   return (
     <Routes>
-      <Route index element={<Login />} />
+      <Route index element={<SignIn />} />
       <Route path="signup" element={<Registration />} />
       <Route path="home" element={<Base />}>
         <Route index element={<Calender />} />

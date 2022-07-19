@@ -1,16 +1,19 @@
 import { Flex, Heading, Link, Box, useDisclosure } from "@chakra-ui/react";
 import { memo, FC, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSignOut } from "../../../hooks/useSignOut";
 import { MenuIconButton } from "../../atoms/button/MenuIconButton";
 import { MenuDrawer } from "../../molecules/MenuDrawer";
 
 export const Header: FC = memo(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { signout, loading } = useSignOut();
   const navigation = useNavigate();
   const onClickHome = useCallback(() => navigation("/home"), [navigation]);
   const onClickPracticePosts = useCallback(() => navigation("/home/practice_posts"), [navigation]);
   const onClickFeeds = useCallback(() => navigation("/home/feeds"), [navigation]);
   const onClickMypage = useCallback(() => navigation("/home/mypage"), [navigation]);
+  const onClickLogOut = useCallback(() => signout(), [navigation]);
 
   return (
     <>
@@ -46,6 +49,7 @@ export const Header: FC = memo(() => {
           <Link onClick={onClickHome}>カレンダー</Link>
           <Link>チーム</Link>
           <Link onClick={onClickMypage}>マイページ</Link>
+          <Link onClick={onClickLogOut}>ログアウト</Link>
         </Flex>
         <MenuIconButton onOpen={onOpen} />
       </Flex>

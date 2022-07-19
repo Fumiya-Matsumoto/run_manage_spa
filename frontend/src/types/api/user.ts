@@ -1,3 +1,4 @@
+
 // サインアップ
 export type SignUpParams = {
   email: string;
@@ -13,24 +14,14 @@ export interface SignInParams {
 
 export type User = {
   id: number;
-  name: string;
-  username: string;
+  uid: string;
+  provider: string;
+  name?: string;
   email: string;
-  address: {
-    street: string;
-    suite: string;
-    city: string;
-    zipcode: string;
-    geo: {
-      lat: string;
-      lng: string;
-    };
-  };
-  phone: string;
-  website: string;
-  company: {
-    name: string;
-    catchPhrase: string;
-    bs: string;
-  };
+  age?: number;
+  sex?: number;
+  height?: number;
+  weight?: number;
+  created_at: Date;
+  updated_at: Date;
 };  
