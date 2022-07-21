@@ -5,9 +5,11 @@ import Cookies from "js-cookie";
 
 import { User } from "../types/api/user";
 import { AuthContext } from "../App";
+import { useMessage } from "./useMessage";
 
 export const useSignIn = () => {
   const navigation = useNavigate();
+  const { showMessage } = useMessage();
 
   const { setLoading, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
   const signin = useCallback(
@@ -31,10 +33,11 @@ export const useSignIn = () => {
 
           setIsSignedIn(true);
           setCurrentUser(res.data.data)
+          showMessage({ title: "ログインしました", status: "success" });
           navigation("/");
         })
         .catch((error) => {
-          alert("ログインできません");
+          showMessage({ title: "ログインできません", status: "error" });
           console.log("login error", error);
         })
         .finally(() => setLoading(false));

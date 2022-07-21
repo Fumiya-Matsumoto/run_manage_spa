@@ -5,9 +5,11 @@ import Cookies from "js-cookie";
 
 import { User } from "../types/api/user";
 import { AuthContext } from "../App";
+import { useMessage } from "./useMessage";
 
 export const useSignOut = () => {
   const navigation = useNavigate();
+  const { showMessage } = useMessage();
 
   const { setLoading, setIsSignedIn } = useContext(AuthContext);
   const signout = useCallback(
@@ -29,10 +31,11 @@ export const useSignOut = () => {
           Cookies.remove("_uid")
 
           setIsSignedIn(false);
+          showMessage({ title: "ログアウトしました", status: "info"})
           navigation("/");
         })
         .catch((error) => {
-          alert("ログアウトできません");
+          showMessage({ title: "ログアウトできません", status: "error" });
           console.log("logout error", error);
         })
         .finally(() => setLoading(false));
