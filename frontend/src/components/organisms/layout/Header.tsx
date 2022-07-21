@@ -1,16 +1,40 @@
 import { Flex, Heading, Link, Box, useDisclosure } from "@chakra-ui/react";
-import { memo, FC, useCallback } from "react";
+import { memo, FC, useCallback, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../App";
+import { useSignOut } from "../../../hooks/useSignOut";
 import { MenuIconButton } from "../../atoms/button/MenuIconButton";
 import { MenuDrawer } from "../../molecules/MenuDrawer";
 
 export const Header: FC = memo(() => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { loading, setLoading, isSignedIn, setIsSignedIn, currentUser, setCurrentUser } = useContext(AuthContext);
+  const { signout } = useSignOut();
   const navigation = useNavigate();
-  const onClickHome = useCallback(() => navigation("/home"), [navigation]);
-  const onClickPracticePosts = useCallback(() => navigation("/home/practice_posts"), [navigation]);
-  const onClickFeeds = useCallback(() => navigation("/home/feeds"), [navigation]);
-  const onClickMypage = useCallback(() => navigation("/home/mypage"), [navigation]);
+  const onClickHome = useCallback(() => navigation("/"), [navigation]);
+  const onClickPracticePosts = useCallback(() => navigation("/practice_posts"), [navigation]);
+  const onClickFeeds = useCallback(() => navigation("/feeds"), [navigation]);
+  const onClickMypage = useCallback(() => navigation("/mypage"), [navigation]);
+  const onClickLogOut = useCallback(() => signout(), [navigation]);
+  const onClickLogIn = useCallback(() => navigation("/signin"), [navigation]);
+  const onClickSignUp = useCallback(() => navigation("/signup"), [navigation]);
+
+  const AuthLinks = () => {
+    if (!loading) {
+      if (isSignedIn) {
+        return <Link onClick={onClickLogOut}>ログアウト</Link>;
+      } else {
+        return (
+          <>
+            <Link onClick={onClickLogIn}>ログイン</Link>
+            <Link onClick={onClickSignUp}>新規登録</Link>
+          </>
+        )
+      }
+    } else {
+      return <></>
+    }
+  }
 
   return (
     <>
@@ -46,6 +70,7 @@ export const Header: FC = memo(() => {
           <Link onClick={onClickHome}>カレンダー</Link>
           <Link>チーム</Link>
           <Link onClick={onClickMypage}>マイページ</Link>
+          <AuthLinks />
         </Flex>
         <MenuIconButton onOpen={onOpen} />
       </Flex>

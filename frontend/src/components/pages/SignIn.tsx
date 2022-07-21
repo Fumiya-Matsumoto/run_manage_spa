@@ -2,25 +2,22 @@ import { memo, FC, useState, ChangeEvent, useContext } from "react";
 import { Flex, Box, Heading, Divider, Input, Stack } from "@chakra-ui/react";
 
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
-import { useSignUp } from "../../hooks/useSignUp";
+import { useSignIn } from "../../hooks/useSignIn";
 import { AuthContext } from "../../App";
 
-export const Registration: FC = memo(() => {
+export const SignIn: FC = memo(() => {
   const { loading } = useContext(AuthContext);
-  const { signup } = useSignUp();
+  const { signin } = useSignIn();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) =>
     setEmail(e.target.value);
   const onChangePassword = (e: ChangeEvent<HTMLInputElement>) =>
     setPassword(e.target.value);
-  const onChangePasswordConfirmation = (e: ChangeEvent<HTMLInputElement>) =>
-    setPasswordConfirmation(e.target.value);
 
-  const onClickSignUp = () => signup(email, password, passwordConfirmation);
+  const onClickSignIn = () => signin(email, password);
 
   return (
     <Flex align="center" justify="center" height="100vh">
@@ -40,17 +37,12 @@ export const Registration: FC = memo(() => {
             value={password}
             onChange={onChangePassword}
           />
-          <Input
-            placeholder="確認用パスワード"
-            value={passwordConfirmation}
-            onChange={onChangePasswordConfirmation}
-          />
           <PrimaryButton
             disabled={email === ""}
             loading={loading}
-            onClick={onClickSignUp}
+            onClick={onClickSignIn}
           >
-            新規登録
+            ログイン
           </PrimaryButton>
         </Stack>
       </Box>
