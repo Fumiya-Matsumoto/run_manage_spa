@@ -1,14 +1,15 @@
 import axios from "axios";
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 import { User } from "../types/api/user";
+import { AuthContext } from "../App";
 
 export const useSignOut = () => {
   const navigation = useNavigate();
 
-  const [loading, setLoading] = useState(false);
+  const { setLoading, setIsSignedIn } = useContext(AuthContext);
   const signout = useCallback(
     () => {
       setLoading(true);
@@ -27,6 +28,7 @@ export const useSignOut = () => {
           Cookies.remove("_client")
           Cookies.remove("_uid")
 
+          setIsSignedIn(false);
           navigation("/");
         })
         .catch((error) => {
@@ -37,5 +39,5 @@ export const useSignOut = () => {
     },
     [navigation]
   );
-  return { signout, loading };
+  return { signout };
 };

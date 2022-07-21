@@ -1,11 +1,13 @@
-import { memo, FC, useState, ChangeEvent } from "react";
+import { memo, FC, useState, ChangeEvent, useContext } from "react";
 import { Flex, Box, Heading, Divider, Input, Stack } from "@chakra-ui/react";
 
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
 import { useSignIn } from "../../hooks/useSignIn";
+import { AuthContext } from "../../App";
 
 export const SignIn: FC = memo(() => {
-  const { signin, loading } = useSignIn();
+  const { loading } = useContext(AuthContext);
+  const { signin } = useSignIn();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

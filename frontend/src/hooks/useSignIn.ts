@@ -1,14 +1,15 @@
 import axios from "axios";
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 import { User } from "../types/api/user";
+import { AuthContext } from "../App";
 
 export const useSignIn = () => {
   const navigation = useNavigate();
 
-  const [loading, setLoading] = useState(false);
+  const { setLoading, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
   const signin = useCallback(
     (email: string, password: string) => {
       setLoading(true);
@@ -28,7 +29,9 @@ export const useSignIn = () => {
           Cookies.set("_client", res.headers["client"])
           Cookies.set("_uid", res.headers["uid"])
 
-          navigation("/home");
+          setIsSignedIn(true);
+          setCurrentUser(res.data.data)
+          navigation("/");
         })
         .catch((error) => {
           alert("ログインできません");
@@ -38,5 +41,5 @@ export const useSignIn = () => {
     },
     [navigation]
   );
-  return { signin, loading };
+  return { signin };
 };

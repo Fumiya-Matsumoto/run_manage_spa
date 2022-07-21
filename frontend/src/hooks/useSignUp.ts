@@ -1,12 +1,13 @@
 import axios from "axios";
-import { useCallback, useState } from "react";
+import { useCallback, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../App";
 import { User } from "../types/api/user";
 
 export const useSignUp = () => {
   const navigation = useNavigate();
-
-  const [loading, setLoading] = useState(false);
+  const { setLoading, setIsSignedIn, setCurrentUser } = useContext(AuthContext);
+ 
   const signup = useCallback(
     (email: string, password: string, passwordConfirmation: string) => {
       setLoading(true);
@@ -23,7 +24,9 @@ export const useSignUp = () => {
         )
         .then((res) => {
           console.log("registration res", res);
-          navigation("/home");
+          setIsSignedIn(true);
+          setCurrentUser(res.data.data)
+          navigation("/");
         })
         .catch((error) => {
           alert("新規登録できません");
@@ -33,5 +36,5 @@ export const useSignUp = () => {
     },
     [navigation]
   );
-  return { signup, loading };
+  return { signup };
 };

@@ -1,23 +1,23 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-import { memo, FC } from "react";
-
-const getUserData = () => {
-  axios.get(
-    "http://localhost:3000/v1/auth/sessions",{
-        headers: {
-        "access-token": Cookies.get("_access_token"),
-        "client": Cookies.get("_client"),
-        "uid": Cookies.get("_uid")
-      }
-    }
-  )
-  .then((res) => {
-    console.log(res.data)
-  });
-}
+import { memo, FC, useContext } from "react";
+import { AuthContext } from "../../App";
 
 export const MyPage: FC = memo(() => {
-  getUserData();
-  return <p>MyPageページです</p>;
+  const { isSignedIn, currentUser } = useContext(AuthContext);
+  return (
+    <>
+      {
+        isSignedIn && currentUser ? (
+          <>
+            <h1>Signed in successfully!</h1>
+            <h2>Email: {currentUser?.email}</h2>
+            <h2>Name: {currentUser?.name}</h2>
+          </>
+        ) : (
+          <h1>Not signed in</h1>
+        )
+      }
+    </>
+  )
 });

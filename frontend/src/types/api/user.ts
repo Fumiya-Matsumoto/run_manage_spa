@@ -1,4 +1,3 @@
-
 // サインアップ
 export type SignUpParams = {
   email: string;
